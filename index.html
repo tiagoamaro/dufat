@@ -1,0 +1,86 @@
+<html>
+<head>
+  <link rel="stylesheet" href="pure-min.css">
+  <style type="text/css">
+    body {
+      background: #323540;
+      color: #D3D9C7;
+    }
+    .container { margin: 0 auto; width: 90%; }
+    .wide-width { width: 80%; }
+  </style>
+
+  <script type="text/javascript" src="angular.min.js"></script>
+  <script type="text/javascript">
+    var app = angular.module('dufat', []);
+
+    app.directive('toDufat', function(){
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ngModel) {
+          function toDufat(text) {
+            text = text.replace(/e/g, 'enter');
+            text = text.replace(/E/g, 'Enter');
+            text = text.replace(/i/g, 'imes');
+            text = text.replace(/I/g, 'Imes');
+            text = text.replace(/a/g, 'ai');
+            text = text.replace(/A/g, 'Ai');
+            text = text.replace(/o/g, 'ober');
+            text = text.replace(/O/g, 'Ober');
+            text = text.replace(/u/g, 'ufat');
+            text = text.replace(/U/g, 'Ufat');
+            return text;
+          }
+
+          ngModel.$parsers.push(toDufat);
+        }
+      }
+    });
+
+    app.directive('fromDufat', function(){
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ngModel) {
+          function fromDufat(text) {
+            text = text.replace(/enter/g, 'e');
+            text = text.replace(/Enter/g, 'E');
+            text = text.replace(/imes/g, 'i');
+            text = text.replace(/Imes/g, 'I');
+            text = text.replace(/ai/g, 'a');
+            text = text.replace(/Ai/g, 'A');
+            text = text.replace(/ober/g, 'o');
+            text = text.replace(/Ober/g, 'O');
+            text = text.replace(/ufat/g, 'u');
+            text = text.replace(/Ufat/g, 'U');
+            return text;
+          }
+
+          ngModel.$parsers.push(fromDufat);
+        }
+      }
+    });
+
+  </script>
+</head>
+<body ng-app="dufat">
+  <div class="pure-g container">
+    <div class="pure-u-1-1">
+      <h1>Dufat!</h1>
+    </div>
+    <div class="pure-u-1-2">
+      <div class="pure-form pure-form-stacked">
+        <label for="to-dufat">To Dufat</label>
+        <textarea id="to-dufat" class="wide-width" cols="30" rows="10" ng-model="inputText" to-dufat></textarea>
+      </div>
+    </div>
+    <div class="pure-u-1-2">
+      <div class="pure-form pure-form-stacked">
+        <label for="from-dufat">From Dufat</label>
+        <textarea id="from-dufat" class="wide-width" cols="30" rows="10" ng-model="inputText" from-dufat></textarea>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
